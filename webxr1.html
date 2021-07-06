@@ -8,7 +8,10 @@
 
   <!-- three.js -->
   <script src="https://unpkg.com/three@0.126.0/build/three.js"></script>
-</head>
+    
+    <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
+
+    </head>
 <body>
 
 <!-- Starting an immersive WebXR session requires user interaction.
@@ -71,8 +74,24 @@
     // near the viewer's position at the time the session was created.
     const referenceSpace = await session.requestReferenceSpace('local');    
         
+    
+    //GTLF    
+    const loader = new THREE.GLTFLoader();
+    let reticle;
+    loader.load("https://immersive-web.github.io/webxr-samples/media/gltf/reticle/reticle.gltf", function(gltf) {
+      reticle = gltf.scene;
+      reticle.visible = false;
+      scene.add(reticle);
+    })
+
+    let flower;
+    loader.load("https://immersive-web.github.io/webxr-samples/media/gltf/sunflower/sunflower.gltf", function(gltf) {
+      flower = gltf.scene;
+    });    
+    //GTLF
         
-        // Create a render loop that allows us to draw on the AR view.
+        
+    // Create a render loop that allows us to draw on the AR view.
     const onXRFrame = (time, frame) => {
       // Queue up the next draw request.
       session.requestAnimationFrame(onXRFrame);
